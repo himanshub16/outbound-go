@@ -24,6 +24,11 @@
 #   go-tests = true
 #   unused-packages = true
 
+[metadata.heroku]
+  root-package = "outbound-go"
+  go-version = "go1.10.2"
+  install = ["./..."]
+
 
 [[constraint]]
   name = "github.com/gin-gonic/gin"
