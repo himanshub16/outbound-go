@@ -28,7 +28,8 @@ func setupDB() {
 
 	err = db.C(config.LinksColl).EnsureIndex(index)
 	if err != nil {
-		log.Fatal("Failed to ensure index on short_id_int", err)
+		log.Println("Failed to ensure index on short_id_int", err)
+		log.Println("Try setting up index manually")
 	}
 }
 
