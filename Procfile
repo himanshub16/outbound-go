@@ -1,1 +1,1 @@
-web: make run
+web: ./outbound-go
