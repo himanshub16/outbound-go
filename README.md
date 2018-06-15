@@ -23,10 +23,13 @@ Table of Contents
 * Count clicks on each shortened URL.
 
 ## Installation
-Download the latest binary for Linux [here](#link) and [`config.json`](#config.json)
+Download the latest binary for Linux [here](https://github.com/himanshub16/outbound-go/releases/latest).
+Configure and just run the binary.
 
 ## Configuration
 `env.json` or `environment variables` is what you are looking for.
+
+It first checks `CONFIG_FILE` environment variable for required file, and if not found fetches each environment variable.
 The variables are described as under:
 
 | Field           | Description                                                     | Example                     |
