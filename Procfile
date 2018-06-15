@@ -1,1 +1,1 @@
-web: ./outbound-go
+web: outbound-go
