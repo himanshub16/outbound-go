@@ -1,0 +1,15 @@
+<html>
+
+<head>
+    <title>Redirecting...</title>
+    <meta charset="UTF-8">
+    <script>try { window.opener = null; } catch (e) { }</script>
+    <meta http-equiv="refresh" content="0; url={{ .REDIRECT_URL }}">
+</head>
+
+<body>
+    Redirecting to
+    <a href="{{ .REDIRECT_URL }}">{{ .REDIRECT_URL }}</a>
+</body>
+
+</html>
