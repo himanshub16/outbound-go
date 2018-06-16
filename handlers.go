@@ -92,10 +92,7 @@ func newEntry(c *gin.Context) {
 	}
 	link := newLink(c.PostForm("url"))
 	if len(config.AuthToken) == 0 {
-		c.HTML(http.StatusOK, "landing.tmpl", gin.H{
-			"newform": false,
-			"link":    link,
-		})
+		c.Redirect(http.StatusMovedPermanently, "/stats/"+link.ShortID)
 		return
 	}
 
