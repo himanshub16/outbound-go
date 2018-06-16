@@ -48,3 +48,7 @@ The variables are described as under:
 * Websites log clicks to other domains for analytical purpose. Example, Facebook uses lm.facebook.com, Slack uses slack-redir.net, Twitter has t.co, etc.
 
 This is similar to https://git.io
+
+
+---
+Liked this? Star this repo, or [Grab me a coffee.](https://github.com/himanshub16/outbound-go/raw/master/static/paytm.png)
