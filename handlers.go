@@ -42,23 +42,63 @@ func NewRouter(_config *Configuration) *gin.Engine {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
 
-	router.GET("/dashboard", dashboard)
+	router.GET("/", landing)
 	router.POST("/new", newEntry)
 	router.GET("/r/:shortId", defaultRedirect)
 	router.GET("/c/:shortId", clientSideRedirect)
 	router.GET("/s/:shortId", serverSideRedirect)
+	router.GET("/stats/:shortId", showStats)
+
+	router.StaticFile("/img/paytm.png", "./static/paytm.png")
 
 	router.NoRoute(noRouteHandler)
 
 	return router
 }
 
-func dashboard(c *gin.Context) {
-	c.String(http.StatusNotImplemented, "Not implemented")
+func landing(c *gin.Context) {
+	if len(config.AuthToken) != 0 {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "Authentication required to access dashboard",
+		})
+		return
+	}
+	c.HTML(http.StatusOK, "landing.tmpl", gin.H{
+		"newform": true,
+	})
+}
+
+func showStats(c *gin.Context) {
+	if len(config.AuthToken) != 0 {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "Authentication required to access dashboard",
+		})
+		return
+	}
+	link, err := getLinkForShortID(c.Param("shortId"))
+	c.HTML(http.StatusOK, "landing.tmpl", gin.H{
+		"newform": false,
+		"link":    link,
+		"err":     err,
+	})
 }
 
 func newEntry(c *gin.Context) {
+	if len(config.AuthToken) != 0 && config.AuthToken != c.PostForm("auth_token") {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "Unauthorized",
+		})
+		return
+	}
 	link := newLink(c.PostForm("url"))
+	if len(config.AuthToken) == 0 {
+		c.HTML(http.StatusOK, "landing.tmpl", gin.H{
+			"newform": false,
+			"link":    link,
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"link":    link,
 		"success": true,

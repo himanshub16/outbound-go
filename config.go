@@ -17,6 +17,7 @@ type Configuration struct {
 
 	Port           string `json:"POR"`
 	RedirectMethod string `json:"REDIRECT_METHOD"`
+	AuthToken      string `json:"AUTH_TOKEN"`
 }
 
 // ReadConfig reads config from config file
@@ -33,6 +34,7 @@ func ReadConfig() *Configuration {
 		config.CounterColl = os.Getenv("COUNTER_COLL")
 		config.Port = os.Getenv("PORT")
 		config.RedirectMethod = os.Getenv("REDIRECT_METHOD")
+		config.AuthToken = os.Getenv("AUTH_TOKEN")
 
 		if len(config.DBURL) == 0 || len(config.DBName) == 0 {
 			log.Fatal("Missing config")

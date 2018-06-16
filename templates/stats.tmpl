@@ -1,0 +1,69 @@
+{{ define "stats" }}
+
+<div>
+  {{ if .err }}
+
+  Link not found :(
+  <br/>
+  <a href="/">Would you like to <u>create</u> one?</a>
+
+  {{ else }}
+
+  <style>
+    td{
+    padding: 5px;
+    font-size: 1.2em;
+    }
+  </style>
+
+  <table>
+    <tr>
+      <td>Original Link</td>
+      <td><a href="{{ .link.URL }}">{{ .link.URL }}</a></td>
+    </tr>
+
+    <tr>
+      <td>
+        <a href="https://www.w3.org/TR/WCAG20-TECHS/H76.html" title="Just works. Uses meta tags to redirect">
+          Client-side redirect
+        </a>
+      </td>
+      <td><a href="/c/{{ .link.ShortID }}" id="client-redir-url">{{ .link.ShortID }}</a></td>
+    </tr>
+
+    <tr>
+      <td>
+        <a href="https://www.w3.org/TR/WCAG20-TECHS/SVR1.html" title="Using HTTP 301 redirect">
+          Server-side redirect
+        </a>
+      </td>
+      <td><a href="/s/{{ .link.ShortID }}" id="server-redir-url">{{ .link.ShortID }}</a></td>
+    </tr>
+
+    <tr>
+      <td>
+        This page
+      </td>
+      <td><a href="#" id="stats-url">{{ .link.ShortID }}</a></td>
+    </tr>
+
+    <tr>
+      <td>Clicks</td>
+      <td>{{ .link.Clicks }}</td>
+    </tr>
+
+    <script>
+      document.getElementById("client-redir-url").innerText = window.location.origin + "/c/{{ .link.ShortID }}"
+
+      document.getElementById("server-redir-url").innerText = window.location.origin + "/s/{{ .link.ShortID }}"
+
+      document.getElementById("stats-url").innerText = window.location.origin + "/stats/{{ .link.ShortID }}";
+      document.getElementById("stats-url").href = window.location.origin + "/stats/{{ .link.ShortID }}";
+    </script>
+
+  </table>
+
+  {{ end }}
+</div>
+
+{{ end }}

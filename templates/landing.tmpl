@@ -1,0 +1,170 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+    <title>Outbound</title>
+
+    <style>
+      body {
+      text-align: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+      }
+      nav {
+      font-family: 'Satisfy', cursive;
+      font-size: 4em;
+      text-align: center;
+      padding: 10px;
+      }
+      nav a {
+          color: white;
+      }
+      a {
+      text-decoration: none;
+      }
+
+      main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 70%;
+      font-size: 2em;
+      }
+
+      main div{
+      background-color: white;
+      padding: 20px;
+      margin:auto;
+      border-radius: 5px;
+      box-shadow: 0 0 #ddd;
+      font-family: 'Lato', san-serif;
+      }
+
+      main input{
+      font-family: monospace;
+      font-size: 0.7em;
+      padding: 5px;
+      min-width: 30vw;
+      }
+      main button {
+      font-family: 'Lato', san-serif;
+      font-weight: bold;
+      padding: 5px;
+      }
+
+      main form {
+      margin: 5px;
+      }
+
+      footer {
+          position: absolute;
+          width: 100vw;
+          bottom: 20px;
+          text-align: center;
+          font-family: 'Lato', san-serif;
+      }
+
+
+      .glassy {
+          background-color: rgba(0, 0, 0, 0.4);
+          opacity: 0.8;
+          color: white;
+          padding: 4px;
+          border-radius: 2px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <a href="https://github.com/you"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <nav>
+      <a href="/">Outbound</a>
+    </nav>
+    <main>
+
+      {{ if .newform }}
+      {{ template "new-form" . }}
+      {{ else }}
+      {{ template "stats" . }}
+      {{ end }}
+
+    </main>
+
+    <footer>
+      Liked it? &nbsp;&nbsp;
+      <a target="_blank" href="https://github.com/himanshub16/outbound-go" class="glassy">Star on GitHub</a>
+      &nbsp;&nbsp; -or-  &nbsp;&nbsp;
+
+      <a target="_blank" href="/img/paytm.png" class="glassy" id="coffee">Grab me a coffee</a>
+
+    </footer>
+
+    <script>
+      var gradients =  [
+      'linear-gradient(135deg, #509BFB, #3EE5FB)',
+      'linear-gradient(135deg, #FFA7E7, #EA6362)',
+      'linear-gradient(135deg, #17EAD9, #6078EA)',
+      'linear-gradient(135deg, #23BCBB, #45E994)',
+      'linear-gradient(135deg, #FFDEA7, #EA6362)',
+      'linear-gradient(135deg, #9B3CB7, #FF396F)',
+      'linear-gradient(135deg, #004B91, #78CC37)',
+      'linear-gradient(135deg, #F83600, #F9D423)',
+      'linear-gradient(135deg, #38B8F2, #843CF7)',
+      'linear-gradient(135deg, #E35C67, #381CE2)',
+      'linear-gradient(135deg, #EFBFD5, #9D61FD)',
+      'linear-gradient(135deg, #45E0A7, #D5E969)',
+      'linear-gradient(135deg, #D73E68, #FBC79A)',
+      'linear-gradient(135deg, #8137F7, #F6AB3E)',
+      'linear-gradient(135deg, #FCE38A, #F38181)',
+      'linear-gradient(135deg, #F54EA2, #FF7676)',
+      'linear-gradient(135deg, #622774, #C53364)',
+      'linear-gradient(135deg, #3a67b0, #3bd2f3)',
+      'linear-gradient(135deg, #3e9fb5, #69d1cf)',
+      'linear-gradient(135deg, #aaafe3, #dd8ce8)',
+      'linear-gradient(135deg, #7117EA, #EA6060)',
+      'linear-gradient(135deg, #3FFDE0, #8927EA)',
+      'linear-gradient(135deg, #42E695, #3BB2B8)',
+      'linear-gradient(135deg, #F02FC2, #6094EA)',
+      'linear-gradient(135deg, #65799B, #5E2563)',
+      'linear-gradient(135deg, #184E68, #57CA85)',
+      'linear-gradient(135deg, #5B247A, #1BCEDF)',
+      'linear-gradient(135deg, #A8EDEA, #FED6E3)',
+      'linear-gradient(135deg, #A5C0EE, #FBC5EC)',
+      'linear-gradient(135deg, #6A11CB, #2575FC)',
+      'linear-gradient(135deg, #FFB199, #FF0844)',
+      'linear-gradient(135deg, #F9F047, #0FD850)',
+      'linear-gradient(135deg, #7742B2, #FD8BD9)',
+      'linear-gradient(135deg, #AC32E4, #4801FF)',
+      'linear-gradient(135deg, #C7EAFD, #E8198B)',
+      'linear-gradient(135deg, #F43B47, #453A94)',
+      'linear-gradient(135deg, #FFF1EB, #ACE0F9)',
+      'linear-gradient(135deg, #D1FDFF, #FDDB92)',
+      'linear-gradient(135deg, #00DBDE, #FC00FF)',
+      'linear-gradient(135deg, #FF57B9, #A704FD)',
+      'linear-gradient(135deg, #B3EB50, #429421)',
+      'linear-gradient(135deg, #E3E3E3, #5D6874)',
+      'linear-gradient(135deg, #0FF0B3, #036ED9)',
+      'linear-gradient(135deg, #FC0D1B, #FC23DA)',
+      'linear-gradient(180deg, #7556A1, #A14A93, #E41F7C)',
+      'linear-gradient(180deg, #FADF38, #81C375, #56C2C5)',
+      'linear-gradient(180deg, #FABA36, #E84A75, #81519E)',
+      'linear-gradient(180deg, #3BFEE5, #2CC3ED, #176BED)',
+      'linear-gradient(180deg, #7D38FB, #C02EC4, #E8207B)',
+      'linear-gradient(180deg, #FDBE2F, #E64778, #8927EA)',
+      ]
+
+      var randomBg = gradients[Math.floor((Math.random() * 1000) % gradients.length)];
+      console.log('setting background to ', randomBg)
+      document.body.style.background = randomBg
+
+
+      var qrimg = document.getElementById('paytm-qr')
+
+    </script>
+  </body>
+</html>
