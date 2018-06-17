@@ -8,4 +8,4 @@ clean:
 	rm ./outbound-go
 
 release:
-	zip outbound-linux-amd64.zip outbound-go templates/* .env.example.json -R
+	zip outbound-linux-amd64.zip outbound-go templates/* static/* .env.example.json -R
