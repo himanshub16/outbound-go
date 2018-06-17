@@ -116,7 +116,8 @@ func defaultRedirect(c *gin.Context) {
 func clientSideRedirect(c *gin.Context) {
 	// redirectURL := "https://google.com/search?q=" + c.Param("shortId")
 	link, err := getLinkForShortID(c.Param("shortId"))
-	if err == mgo.ErrNotFound {
+	// if err == mgo.ErrNotFound {
+	if err != nil {
 		noRouteHandler(c)
 		return
 	}
@@ -130,7 +131,8 @@ func clientSideRedirect(c *gin.Context) {
 func serverSideRedirect(c *gin.Context) {
 	// redirectURL := "https://google.com/search?q=" + c.Param("shortId")
 	link, err := getLinkForShortID(c.Param("shortId"))
-	if err == mgo.ErrNotFound {
+	// if err == mgo.ErrNotFound {
+	if err != nil {
 		noRouteHandler(c)
 		return
 	}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
@@ -8,6 +9,7 @@ import (
 )
 
 var baseconv, _ = NewBaseConvertor(62)
+var errInvalidLink = errors.New("Short link too large")
 
 // Link describes a link in the database
 type Link struct {
@@ -54,6 +56,9 @@ func newLink(URL string) *Link {
 }
 
 func getLinkForShortID(shortID string) (*Link, error) {
+	if len(shortID) > 10 {
+		return nil, errInvalidLink
+	}
 	coll := db.C(config.LinksColl)
 	shortIDInt := baseconv.Decode(shortID)
 	var link Link
