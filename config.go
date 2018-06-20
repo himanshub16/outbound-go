@@ -15,7 +15,7 @@ type Configuration struct {
 	LinksColl   string `json:"LINKS_COLL"`
 	CounterColl string `json:"COUNTER_COLL"`
 
-	Port           string `json:"POR"`
+	Port           string `json:"PORT"`
 	RedirectMethod string `json:"REDIRECT_METHOD"`
 	AuthToken      string `json:"AUTH_TOKEN"`
 }
@@ -28,6 +28,7 @@ func ReadConfig() *Configuration {
 	configFilename = os.Getenv("CONFIG_FILE")
 	if len(configFilename) == 0 {
 		// configFilename = ".env.json"
+		log.Println("Config file not provided. Reading environment variables.")
 		config.DBName = os.Getenv("DB_NAME")
 		config.DBURL = os.Getenv("DB_URL")
 		config.LinksColl = os.Getenv("LINKS_COLL")
