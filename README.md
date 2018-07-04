@@ -14,6 +14,7 @@ Table of Contents
 * [Features](#features)
 * [Installation](#installation)
 * [Configuration](#configuration)
+* [Usage](#usage)
 
 ## Features
 * Written in Go - just a binary with 0 dependencies.
@@ -36,11 +37,23 @@ The variables are described as under:
 | ------          | -----------                                                     | -------                     |
 | DB_URL          | URL of MongoDB instance                                         | `mongodb://localhost:27017` |
 | DB_NAME         | Name of database                                                | outbound                    |
-| LINKS_COLL   | The collection which stores the links                           | `links`                     |
+| LINKS_COLL      | The collection which stores the links                           | `links`                     |
 | COUNTER_COLL    | The collection which stores the counter                         | `counter`                   |
 |                 |                                                                 |                             |
 | PORT            |                                                                 | 9000                        |
 | REDIRECT_METHOD | Default redirect method, one of `client-side` and `server-side` | `client-side`               |
+
+
+## Usage
+* Create a new entry
+
+Make a  post request to `/new` with `access_token` (_if required_) and `url`.
+The result will be a new **Link** object with the `short_id` of the shortened URL.
+
+* Redirect a shortened URL (`short_id`)
+  - **Client side** : `/c/:short_id`
+  - **Server side** : `/s/:short_id`
+  - **Default** : `/r/:short_id`
 
 
 ## What does outbound mean?
