@@ -27,6 +27,14 @@ Table of Contents
 Download the latest binary for Linux [here](https://github.com/himanshub16/outbound-go/releases/latest).
 Configure and just run the binary.
 
+### Using docker
+1. Clone the repo 
+2. Docker compose 
+  ```
+  docker-compose up --build
+  ```
+3. To chnage configurations update `docker.env`
+
 ## Configuration
 `env.json` or `environment variables` is what you are looking for.
 

@@ -38,7 +38,7 @@ func ReadConfig() *Configuration {
 		config.AuthToken = os.Getenv("AUTH_TOKEN")
 
 		if len(config.DBURL) == 0 || len(config.DBName) == 0 {
-			log.Fatal("Missing config")
+			log.Fatalf("Missing config , Config : %+v", config)
 		}
 
 		return &config

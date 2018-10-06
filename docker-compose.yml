@@ -1,0 +1,16 @@
+version: '2'
+services:
+    go:
+        build: .
+        restart: unless-stopped
+        ports:
+            - "9000:9000" # PORT from environment file
+        env_file:
+            - docker.env      
+        links:
+            - mongo
+    mongo:
+        image: mvertes/alpine-mongo
+        restart: unless-stopped
+        ports:
+            - "27017:27017"
