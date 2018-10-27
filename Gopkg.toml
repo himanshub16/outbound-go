@@ -41,3 +41,7 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  name = "github.com/go-pg/pg"
+  version = "6.15.0"
