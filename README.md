@@ -13,6 +13,7 @@ Table of Contents
 * [What does outbound mean?](#what-does-outbound-mean)
 * [Features](#features)
 * [Installation](#installation)
+* [Using docker](#using-docker)
 * [Configuration](#configuration)
 * [Usage](#usage)
 
@@ -33,7 +34,7 @@ Configure and just run the binary.
   ```
   docker-compose up --build
   ```
-3. To chnage configurations update `docker.env`
+3. To change configurations update `docker.env`
 
 ## Configuration
 `env.json` or `environment variables` is what you are looking for.
