@@ -1,5 +1,5 @@
 .build:
-	go build -ldflags="-s -w"
+	go build -ldflags="-s -w" -o outbound-go
 
 run:	.build
 	./outbound-go

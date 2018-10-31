@@ -13,10 +13,10 @@ RUN go get ${REPO}
 
 WORKDIR /go/src/${REPO}
 
-RUN make .build
+RUN go build -ldflags="-s -w" -o outbound-go
 
 # Run the service
-ENTRYPOINT ["make","run"]
+ENTRYPOINT ["outbound-go"]
 
 # Document that the service listens on port 9000.
 EXPOSE 9000
