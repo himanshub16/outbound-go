@@ -2,42 +2,14 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	mgo "gopkg.in/mgo.v2"
-	"log"
 	"net/http"
 )
 
-var (
-	config *Configuration
-	db     *mgo.Database
-)
-
-func setupDB() {
-	session, err := mgo.Dial(config.DBURL)
-	if err != nil {
-		log.Fatal(err)
-	}
-	db = session.DB(config.DBName)
-
-	index := mgo.Index{
-		Key:        []string{"short_id_int"},
-		Unique:     true,
-		DropDups:   true,
-		Background: true,
-	}
-
-	err = db.C(config.LinksColl).EnsureIndex(index)
-	if err != nil {
-		log.Println("Failed to ensure index on short_id_int", err)
-		log.Println("Try setting up index manually")
-	}
-}
+var service Service
 
 // NewRouter instantiates a new gin Router
-func NewRouter(_config *Configuration) *gin.Engine {
-
-	config = _config
-	setupDB()
+func NewRouter(_service Service) *gin.Engine {
+	service = _service
 
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
@@ -75,7 +47,7 @@ func showStats(c *gin.Context) {
 		})
 		return
 	}
-	link, err := getLinkForShortID(c.Param("shortId"))
+	link, err := service.getLinkForShortID(c.Param("shortId"))
 	c.HTML(http.StatusOK, "landing.tmpl", gin.H{
 		"newform": false,
 		"link":    link,
@@ -90,7 +62,7 @@ func newEntry(c *gin.Context) {
 		})
 		return
 	}
-	link := newLink(c.PostForm("url"))
+	link := service.newLink(c.PostForm("url"))
 	if len(config.AuthToken) == 0 {
 		c.Redirect(http.StatusMovedPermanently, "/stats/"+link.ShortID)
 		return
@@ -115,13 +87,13 @@ func defaultRedirect(c *gin.Context) {
 
 func clientSideRedirect(c *gin.Context) {
 	// redirectURL := "https://google.com/search?q=" + c.Param("shortId")
-	link, err := getLinkForShortID(c.Param("shortId"))
+	link, err := service.getLinkForShortID(c.Param("shortId"))
 	// if err == mgo.ErrNotFound {
 	if err != nil {
 		noRouteHandler(c)
 		return
 	}
-	incrementLinkCounter(link)
+	service.incrementLinkCounter(link)
 
 	c.HTML(http.StatusOK, "client-side-redirect.tmpl", gin.H{
 		"REDIRECT_URL": link.URL,
@@ -130,13 +102,13 @@ func clientSideRedirect(c *gin.Context) {
 
 func serverSideRedirect(c *gin.Context) {
 	// redirectURL := "https://google.com/search?q=" + c.Param("shortId")
-	link, err := getLinkForShortID(c.Param("shortId"))
+	link, err := service.getLinkForShortID(c.Param("shortId"))
 	// if err == mgo.ErrNotFound {
 	if err != nil {
 		noRouteHandler(c)
 		return
 	}
-	incrementLinkCounter(link)
+	service.incrementLinkCounter(link)
 
 	c.Redirect(http.StatusMovedPermanently, link.URL)
 }

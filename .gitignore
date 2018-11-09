@@ -12,3 +12,6 @@
 *.out
 /outbound-go
 *.zip
+
+# ide
+.idea/
