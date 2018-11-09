@@ -19,7 +19,7 @@ Table of Contents
 
 ## Features
 * Written in Go - just a binary with 0 dependencies.
-* Uses MongoDB for write-intensive storage.
+* Supports both MongoDB and PostgreSQL.
 * Redirect your preferred way - [**client-side**](https://www.w3.org/TR/WCAG20-TECHS/H76.html) or [**server-side**](https://www.w3.org/TR/WCAG20-TECHS/SVR1.html).
 * Shorten URLs to reduce usage.
 * Count clicks on each shortened URL.
@@ -37,13 +37,14 @@ Configure and just run the binary.
 3. To change configurations update `docker.env`
 
 ## Configuration
-`env.json` or `environment variables` is what you are looking for.
+`.env.postgresql.json`, `.env.mongodb.json` or `environment variables` is what you are looking for.
 
 It first checks `CONFIG_FILE` environment variable for required file, and if not found fetches each environment variable.
 The variables are described as under:
 
 | Field           | Description                                                     | Example                     |
 | ------          | -----------                                                     | -------                     |
+| DBTYPE          | string : one of `postgresql` or `mongodb`                       | `mongodb`                   |
 | DB_URL          | URL of MongoDB instance                                         | `mongodb://localhost:27017` |
 | DB_NAME         | Name of database                                                | outbound                    |
 | LINKS_COLL      | The collection which stores the links                           | `links`                     |
@@ -51,6 +52,7 @@ The variables are described as under:
 |                 |                                                                 |                             |
 | PORT            |                                                                 | 9000                        |
 | REDIRECT_METHOD | Default redirect method, one of `client-side` and `server-side` | `client-side`               |
+| REQUIRE_SSL     | boolean : Use SSL (for Postgres, to support Heroku)             | true                        |
 
 
 ## Usage
