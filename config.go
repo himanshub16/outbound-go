@@ -10,10 +10,13 @@ import (
 
 // Configuration describes the fields of JSON configuration
 type Configuration struct {
+	DBTYPE      string `json:"DB_TYPE"`
 	DBURL       string `json:"DB_URL"`
 	DBName      string `json:"DB_NAME"`
-	LinksColl   string `json:"LINKS_COLL"`
-	CounterColl string `json:"COUNTER_COLL"`
+	DBUser      string `json:"DB_USER"`
+	DBPass      string `json:"DB_PASSWORD"`
+	LinksColl   string `json:"LINKS_COLL,omitempty"`
+	CounterColl string `json:"COUNTER_COLL,omitempty"`
 
 	Port           string `json:"PORT"`
 	RedirectMethod string `json:"REDIRECT_METHOD"`
@@ -22,15 +25,22 @@ type Configuration struct {
 
 // ReadConfig reads config from config file
 func ReadConfig() *Configuration {
-	var config Configuration
-	var configFilename string
+	var (
+		config         Configuration
+		configFilename string
+	)
 
 	configFilename = os.Getenv("CONFIG_FILE")
+	//configFilename = ".env.postgresql.json"
+	//configFilename = ".env.mongodb.json"
 	if len(configFilename) == 0 {
-		// configFilename = ".env.json"
+
 		log.Println("Config file not provided. Reading environment variables.")
-		config.DBName = os.Getenv("DB_NAME")
+		config.DBTYPE = os.Getenv("DB_TYPE")
 		config.DBURL = os.Getenv("DB_URL")
+		config.DBName = os.Getenv("DB_NAME")
+		config.DBUser = os.Getenv("DB_USER")
+		config.DBPass = os.Getenv("DB_PASSWORD")
 		config.LinksColl = os.Getenv("LINKS_COLL")
 		config.CounterColl = os.Getenv("COUNTER_COLL")
 		config.Port = os.Getenv("PORT")
@@ -47,7 +57,7 @@ func ReadConfig() *Configuration {
 	configFile, err := os.Open(configFilename)
 	defer configFile.Close()
 
-	if err != nil {
+	if configFile == nil || err != nil {
 		log.Fatal("Failed to load config file", err)
 	}
 
