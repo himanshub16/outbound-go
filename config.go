@@ -15,6 +15,7 @@ type Configuration struct {
 	DBName      string `json:"DB_NAME"`
 	DBUser      string `json:"DB_USER"`
 	DBPass      string `json:"DB_PASSWORD"`
+	UseSSL      bool   `json:"REQUIRE_SSL"`
 	LinksColl   string `json:"LINKS_COLL,omitempty"`
 	CounterColl string `json:"COUNTER_COLL,omitempty"`
 
@@ -46,9 +47,13 @@ func ReadConfig() *Configuration {
 		config.Port = os.Getenv("PORT")
 		config.RedirectMethod = os.Getenv("REDIRECT_METHOD")
 		config.AuthToken = os.Getenv("AUTH_TOKEN")
+		config.UseSSL = false
 
 		if len(config.DBURL) == 0 || len(config.DBName) == 0 {
 			log.Fatalf("Missing config , Config : %+v", config)
+		}
+		if len(os.Getenv("REQUIRE_SSL")) != 0 {
+			config.UseSSL = true
 		}
 
 		return &config
