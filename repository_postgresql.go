@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
 	"log"
@@ -21,7 +22,7 @@ func (p *PostgreSQLRepository) FindCounterById(id string) (*Counter, error) {
 	return counter, nil
 }
 
-func (p *PostgreSQLRepository) UpsertCounter(counter Counter) (error) {
+func (p *PostgreSQLRepository) UpsertCounter(counter Counter) error {
 	_, err := p.db.Model(&counter).
 		OnConflict("(id) DO UPDATE").
 		Set("count = ?count").
@@ -29,7 +30,7 @@ func (p *PostgreSQLRepository) UpsertCounter(counter Counter) (error) {
 	return err
 }
 
-func (p *PostgreSQLRepository) InsertLink(link Link) (error) {
+func (p *PostgreSQLRepository) InsertLink(link Link) error {
 	return p.db.Insert(&link)
 }
 
@@ -45,7 +46,7 @@ func (p *PostgreSQLRepository) FindLinkByShortIdInt(id uint) (*Link, error) {
 	return link, nil
 }
 
-func (p *PostgreSQLRepository) UpdateLink(link Link) (error) {
+func (p *PostgreSQLRepository) UpdateLink(link Link) error {
 	return p.db.Update(&link)
 }
 
@@ -54,11 +55,16 @@ func (p *PostgreSQLRepository) close() {
 }
 
 func NewPostgreSQLRepository() *PostgreSQLRepository {
+	var tlsConfig *tls.Config = nil
+	if config.UseSSL == true {
+		tlsConfig = &tls.Config{InsecureSkipVerify: true}
+	}
 	db := pg.Connect(&pg.Options{
-		Addr:     config.DBURL,
-		User:     config.DBUser,
-		Password: config.DBPass,
-		Database: config.DBName,
+		Addr:      config.DBURL,
+		User:      config.DBUser,
+		Password:  config.DBPass,
+		Database:  config.DBName,
+		TLSConfig: tlsConfig,
 	})
 
 	for _, model := range []interface{}{&Link{}, &Counter{}} {
