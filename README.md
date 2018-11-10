@@ -1,10 +1,6 @@
 # Outbound
 
-Create and manage outbound links and shorten URLs without hassle.
-
-**Use cases**
-* Host your own **URL shortener**
-* Log clicks to outbound links
+URL shortener and click counter. Best suited if you are looking to host your own.
 
 ---
 
@@ -18,7 +14,7 @@ Table of Contents
 * [Usage](#usage)
 
 ## Features
-* Written in Go - just a binary with 0 dependencies.
+* Written in Go - just a binary with 0 dependencies and yeah, it's fast.
 * Supports both MongoDB and PostgreSQL.
 * Redirect your preferred way - [**client-side**](https://www.w3.org/TR/WCAG20-TECHS/H76.html) or [**server-side**](https://www.w3.org/TR/WCAG20-TECHS/SVR1.html).
 * Shorten URLs to reduce usage.
