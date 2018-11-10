@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
 	"log"
@@ -55,17 +54,11 @@ func (p *PostgreSQLRepository) close() {
 }
 
 func NewPostgreSQLRepository() *PostgreSQLRepository {
-	var tlsConfig *tls.Config = nil
-	if config.UseSSL == true {
-		tlsConfig = &tls.Config{InsecureSkipVerify: true}
+	options, err := pg.ParseURL(config.DatabaseURL)
+	if err != nil {
+		log.Fatal("pg: Failed to parse URL", err)
 	}
-	db := pg.Connect(&pg.Options{
-		Addr:      config.DBURL,
-		User:      config.DBUser,
-		Password:  config.DBPass,
-		Database:  config.DBName,
-		TLSConfig: tlsConfig,
-	})
+	db := pg.Connect(options)
 
 	for _, model := range []interface{}{&Link{}, &Counter{}} {
 		err := db.CreateTable(model, &orm.CreateTableOptions{

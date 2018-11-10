@@ -45,14 +45,12 @@ The variables are described as under:
 | Field           | Description                                                     | Example                     |
 | ------          | -----------                                                     | -------                     |
 | DBTYPE          | string : one of `postgresql` or `mongodb`                       | `mongodb`                   |
-| DB_URL          | URL of MongoDB instance                                         | `mongodb://localhost:27017` |
-| DB_NAME         | Name of database                                                | outbound                    |
+| DB_URL          | URL of database instance (mongodb/postgresql)                   | `mongodb://localhost:27017` |
 | LINKS_COLL      | The collection which stores the links                           | `links`                     |
 | COUNTER_COLL    | The collection which stores the counter                         | `counter`                   |
 |                 |                                                                 |                             |
 | PORT            |                                                                 | 9000                        |
 | REDIRECT_METHOD | Default redirect method, one of `client-side` and `server-side` | `client-side`               |
-| REQUIRE_SSL     | boolean : Use SSL (for Postgres, to support Heroku)             | true                        |
 
 
 ## Usage

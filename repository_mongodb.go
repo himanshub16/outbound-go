@@ -27,7 +27,7 @@ func (m *MongoDBRepository) UpsertCounter(counter Counter) error {
 	return err
 }
 
-func (m *MongoDBRepository) InsertLink(link Link) (error) {
+func (m *MongoDBRepository) InsertLink(link Link) error {
 	coll := m.db.C(config.LinksColl)
 	return coll.Insert(link)
 }
@@ -53,11 +53,15 @@ func (m *MongoDBRepository) close() {
 }
 
 func NewMongoDBRepository() *MongoDBRepository {
-	session, err := mgo.Dial(config.DBURL)
+	dialInfo, err := mgo.ParseURL(config.DatabaseURL)
+	if err != nil {
+		log.Fatal("mongodb: Failed to parse URL", err)
+	}
+	session, err := mgo.DialWithInfo(dialInfo)
 	if err != nil {
 		log.Fatal(err)
 	}
-	db := session.DB(config.DBName)
+	db := session.DB(dialInfo.Database)
 
 	index := mgo.Index{
 		Key:        []string{"short_id_int"},
